@@ -27,8 +27,8 @@ Introducing a robust R pipeline designed for the identification and characteriza
 1. **Create Conda Environment**:
 
 ```bash
-conda create -n scrare-env -c conda-forge r-base=4.3.2 r-essentials
-conda activate scrare-env
+conda create -n name-of-your-env -c conda-forge r-base=4.3.2 r-essentials
+conda activate name-of-your-env
 
 ```
 
@@ -43,7 +43,7 @@ conda install -c bioconda bioconductor-singlecellexperiment bioconductor-scran
 1. **Install BigSur**:
 
 ```r
-remotes::install_github("landerlabcode/BigSur")
+remotes::install_github("landerlabcode/BigSurR")
 
 ```
 
@@ -56,10 +56,10 @@ pancreas_data <- BaronPancreasData(which = "human")
 seu_obj <- CreateSeuratObject(counts = counts(pancreas_data))
 
 # Run full pipeline
-source("R/01_quality_control_normalization.R")
-source("R/02_clustering_celltype_id.R")
-source("R/03_rare_population_analysis.R")
-source("R/04_differential_expression_visualization.R")
+source("R/01_chord_quality_control_normalization.R")
+source("R/02_chord_clustering_celltype_id.R")
+source("R/03_chord_rare_population_analysis.R")
+source("R/04_chord_differential_expression_visualization.R")
 
 ```
 
@@ -71,10 +71,10 @@ immune-chord/
 │   ├── raw_data/                 # Raw data (with README for download instructions)
 │   └── processed_data/           # Processed datasets (.rds files)
 ├── R/                            # Pipeline scripts
-│   ├── 01_quality_control_normalization.R
-│   ├── 02_clustering_celltype_id.R
-│   ├── 03_rare_population_analysis.R      # Uses BigSur
-│   ├── 04_differential_expression_visualization.R
+│   ├── 01_chord_quality_control_normalization.R
+│   ├── 02_chord_clustering_celltype_id.R
+│   ├── 03_chord_rare_population_analysis.R      # Uses BigSur
+│   ├── 04_chord_differential_expression_visualization.R
 │   └── functions.R               # Helper functions
 ├── analysis/
 │   └── vignette.Rmd              # Complete tutorial
