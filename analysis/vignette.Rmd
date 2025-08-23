@@ -1,0 +1,25 @@
+---
+title: "Chord Pipeline - Single Cell Find Tutorial: Identifying Rare Cell Populations with BigSur"
+author: "Constanza Eugenia Perez"
+date: "`r Sys.Date()`"
+output:
+  github_document:
+    toc: true
+    toc_depth: 3
+---
+
+# Introduction
+
+This tutorial demonstrates the complete workflow for identifying rare cell populations in single-cell RNA sequencing data using the scRareFind pipeline with BigSur.
+
+## Prerequisites
+
+- R version 4.3.2 or higher
+- Conda environment with required packages
+- Basic knowledge of single-cell RNA sequencing analysis
+
+# Setup
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+

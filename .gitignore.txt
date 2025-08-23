@@ -1,0 +1,123 @@
+# scRareFind .gitignore
+# R-specific ignores
+.Rhistory
+.RData
+.Ruserdata
+.Rproj.user/
+*.Rproj
+
+# Session files
+*.Rds
+*.rds
+*.rda
+
+# Output files
+*.html
+*.pdf
+*.png
+*.jpg
+*.jpeg
+*.tiff
+*.svg
+
+# Log files
+*.log
+*.txt
+*.out
+
+# Environment files
+.Renviron
+*.env
+
+# Package files
+*.tar.gz
+*.tgz
+
+# Data directories (ignore contents but keep structure)
+data/raw_data/*
+!data/raw_data/README.md
+data/processed_data/*
+!data/processed_data/README.md
+
+# Figure directory (ignore generated figures)
+figures/*
+!figures/README.md
+
+# Mac OS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Python (for future integration)
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary files
+*.tmp
+*.temp
+
+# Large files that shouldn't be versioned
+*.h5
+*.h5ad
+*.loom
+*.mtx
+*.csv
+*.tsv
+*.txt
+
+# But keep small metadata files
+!*.md
+
+# Seurat disk files
+*.h5seurat
+
+# Conda environment
+env/
+environments/
+conda-env/
+
+# Knitr temporary files
+*_cache/
+/cache/
+
+# Package documentation
+docs/*.html
+docs/*.pdf
+man/*.Rd
+
+# Keep these patterns
+!README.md
+!LICENSE
+!DESCRIPTION
+!NAMESPACE
+!.gitignore
