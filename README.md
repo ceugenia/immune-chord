@@ -144,7 +144,7 @@ The pipeline generates various visualizations and results:
 *UMAP highlighting rare cell populations identified by BigSur*
 
 ### Differential Expression
-![Volcano Plot](04_volcano_de_genes.png)
+![Volcano Plot](figures/04_volcano_de_genes.png)
 *Volcano plot of differentially expressed genes in rare populations*
 
 ## 🐛 Troubleshooting
