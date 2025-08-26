@@ -53,7 +53,7 @@ seu_obj <- CreateSeuratObject(counts = counts(pancreas_data))
 # Run full pipeline
 source("R/01_chord_quality_control_normalization.R")
 source("R/02_chord_clustering_celltype_id.R")
-source("R/03_chord_rare_population_analysis.R")
+source("R/03_chord__population_analysis.R")
 source("R/04_chord_differential_expression_visualization.R")
 ```
 
@@ -69,7 +69,7 @@ immune-chord/
 ├── R/                            # Pipeline scripts
 │   ├── 01_chord_quality_control_normalization.R
 │   ├── 02_chord_clustering_celltype_id.R
-│   ├── 03_chord_rare_population_analysis.R      # Uses BigSur
+│   ├── 03_chord__population_analysis.R      # Uses BigSur
 │   ├── 04_chord_differential_expression_visualization.R
 │   └── functions.R               # Helper functions
 ├── analysis/
@@ -93,11 +93,11 @@ data <- BaronPancreasData(which = "human")
 
 2. **10X Genomics PBMC** (standard benchmark):
    - Download: [10x Genomics Datasets](https://www.10xgenomics.com/datasets)
-   - Contains rare dendritic cells and progenitors
+   - Contains  dendritic cells and progenitors
 
 3. **Tabula Sapiens** (comprehensive atlas):
    - Download: [Tabula Sapiens Portal](https://tabula-sapiens-portal.ds.czbiohub.org/)
-   - Includes rare cell types across multiple tissues
+   - Includes  cell types across multiple tissues
 
 ## 🔧 Configuration
 
@@ -151,7 +151,7 @@ The pipeline generates various visualizations, including:
 ![UMAP 27 Communities](figures/umap_27_communities.png)
 *UMAP showing 27 distinct cell communities identified.*
 
-![UMAP Rare Cells](figures/umap_rate_cells.png)
+![UMAP Rare Cells](figures/umap_rare_cells.png)
 *UMAP highlighting rare cell populations identified by BigSur.*
 
 ### Marker & Differential Expression
