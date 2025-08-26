@@ -1,16 +1,19 @@
-# **immune-chord: R Pipeline for Identifying Rare Cell Populations**
+# immune-chord: R Pipeline for Identifying Rare Cell Populations
 
-![R Version](https://img.shields.io/badge/R-4.3.2+-blue.svg)
-![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
-![Lifecycle: Active](https://img.shields.io/badge/lifecycle-active-green.svg)
+![Lifecycle](https://img.shields.io/badge/lifecycle-active-brightgreen.svg)
+![R Version](https://img.shields.io/badge/R-%3E%3D4.2.0-blue.svg)
+![License](https://img.shields.io/badge/license-MIT-lightgrey.svg)
 
 A robust R pipeline designed for the identification and characterization of rare cell populations in single-cell RNA sequencing data, utilizing Seurat and BigSur.
 
+![UMAP Visualization of Rare Cells](https://github.com/ceugenia/immune-chord/raw/main/figures/umap_rare_cells.png)
+*UMAP projection highlighting rare cell populations identified by the BigSur algorithm*
+
 ## 📋 Overview
 
-**immune-chord** offers a standardized and reproducible workflow for identifying rare cell populations, such as neural crest stem cells and uncommon immune subsets, in single-cell RNA sequencing data. This pipeline encompasses the entire analysis lifecycle, from raw data processing to advanced statistical analysis and visualization.
+`immune-chord` offers a standardized and reproducible workflow for identifying rare cell populations, such as neural crest stem cells and uncommon immune subsets, in single-cell RNA sequencing data. This pipeline encompasses the entire analysis lifecycle, from raw data processing to advanced statistical analysis and visualization.
 
-### **Key Features**
+### 🎯 Key Features
 
 - **Rare Cell Detection**: Utilizes the BigSur algorithm for precise identification of rare populations
 - **Complete Workflow**: Provides end-to-end processing, from quality control to biological interpretation
@@ -20,44 +23,44 @@ A robust R pipeline designed for the identification and characterization of rare
 
 ## 🚀 Quick Start
 
+### Input & Output
+
+- **Input**: A Seurat object or raw count matrix from scRNA-seq data
+- **Output**: Identified rare cell populations, marker genes, differential expression results, and publication-quality visualizations
+
 ### Installation
 
-1. **Create Conda Environment**:
-
+1. **Create and activate Conda Environment**:
 ```bash
 conda create -n immune-chord -c conda-forge r-base=4.3.2 r-essentials
 conda activate immune-chord
 ```
 
-2. **Install R Packages**:
-
+2. **Install R Dependencies**:
 ```bash
-conda install -c conda-forge r-seurat r-tidyverse r-devtools r-remotes r-biocmanager
-conda install -c bioconda bioconductor-singlecellexperiment bioconductor-scran
-```
+# Install CRAN packages
+install.packages(c("Seurat", "tidyverse", "devtools", "remotes", "BiocManager"))
 
-3. **Install BigSur**:
+# Install Bioconductor packages
+BiocManager::install(c("SingleCellExperiment", "scran"))
 
-```r
+# Install BigSur
 remotes::install_github("landerlabcode/BigSurR")
 ```
 
-### Basic Usage
-
+3. **Run the pipeline**:
 ```r
-# Load data
+# Load your data (example with test data)
 library(scRNAseq)
 pancreas_data <- BaronPancreasData(which = "human")
 seu_obj <- CreateSeuratObject(counts = counts(pancreas_data))
 
-# Run full pipeline
+# Execute the full pipeline
 source("R/01_chord_quality_control_normalization.R")
 source("R/02_chord_clustering_celltype_id.R")
-source("R/03_chord__population_analysis.R")
+source("R/03_chord_rare_population_analysis.R")  # Uses BigSur
 source("R/04_chord_differential_expression_visualization.R")
 ```
-
----
 
 ## 📁 Project Structure
 
@@ -69,23 +72,21 @@ immune-chord/
 ├── R/                            # Pipeline scripts
 │   ├── 01_chord_quality_control_normalization.R
 │   ├── 02_chord_clustering_celltype_id.R
-│   ├── 03_chord__population_analysis.R      # Uses BigSur
+│   ├── 03_chord_rare_population_analysis.R      # Uses BigSur
 │   ├── 04_chord_differential_expression_visualization.R
 │   └── functions.R               # Helper functions
 ├── analysis/
 │   └── vignette.Rmd              # Complete tutorial
 ├── docs/
 │   └── tutorial.md               # Rendered tutorial
-├── figures/                      # Output plots (move PNG files here)
+├── figures/                      # Output plots
+├── session_info.txt              # Session information for reproducibility
 └── README.md
 ```
-
----
 
 ## 📊 Recommended Datasets
 
 1. **BaronPancreasData** (easiest for testing):
-
 ```r
 library(scRNAseq)
 data <- BaronPancreasData(which = "human")
@@ -93,23 +94,23 @@ data <- BaronPancreasData(which = "human")
 
 2. **10X Genomics PBMC** (standard benchmark):
    - Download: [10x Genomics Datasets](https://www.10xgenomics.com/datasets)
-   - Contains  dendritic cells and progenitors
+   - Contains rare dendritic cells and progenitors
 
 3. **Tabula Sapiens** (comprehensive atlas):
-   - Download: [Tabula Sapiens Portal](https://tabula-sapiens-portal.ds.czbiohub.org/)
-   - Includes  cell types across multiple tissues
+   - Download: [Tabula Sapiens Portal](https://tabula-sapiens-portal.ds.czbiohub.org)
+   - Includes rare cell types across multiple tissues
 
 ## 🔧 Configuration
 
 ### Key Parameters
 
 | Parameter | Default | Description |
-| --- | --- | --- |
-| `min_features` | 200 | Minimum features per cell |
-| `max_mito` | 10 | Maximum mitochondrial percentage |
-| `fano.alpha` | 0.05 | FDR cutoff for variable features |
-| `min.fano` | 1.5 | Minimum Fano factor threshold |
-| `resolution` | 1.2 | Clustering resolution |
+|-----------|---------|-------------|
+| min_features | 200 | Minimum features per cell |
+| max_mito | 10 | Maximum mitochondrial percentage |
+| fano.alpha | 0.05 | FDR cutoff for variable features |
+| min.fano | 1.5 | Minimum Fano factor threshold |
+| resolution | 1.2 | Clustering resolution |
 
 ### Example Analysis
 
@@ -126,73 +127,56 @@ results <- BigSur(
 )
 ```
 
-## 📈 Example Output
+## 📈 Example Outputs
 
-The pipeline generates various visualizations, including:
+The pipeline generates various visualizations and results:
 
 ### Quality Control
-![Quality Control Violin Plots](figures/01_qc_violin_plots.png)
-*Violin plots showing quality metrics (nFeature_RNA, nCount_RNA, percent.mito).*
+![Quality Control Plots](figures/01_qc_violin_plots.png)
+*Violin plots showing quality metrics (nFeature_RNA, nCount_RNA, percent.mito)*
 
-![Mitochondrial QC](figures/01_qc_mitochondrial.png)
-*Scatter plot relating nFeature_RNA to mitochondrial percentage.*
+### Dimensionality Reduction
+![UMAP Clustering](figures/02_umap_initial_clusters.png)
+*UMAP visualization showing cell clustering*
 
-![Feature Scatter](figures/01_qc_feature_scatter.png)
-*Scatter plot showing relationship between nFeature_RNA and nCount_RNA.*
+### Rare Cell Identification
+![Rare Cells](figures/04_umap_cell_status.png)
+*UMAP highlighting rare cell populations identified by BigSur*
 
-### Dimensionality Reduction & Clustering
-![PCA Elbow Plot](figures/02_pca_elbow_plot.png)
-*Elbow plot for determining significant principal components.*
-
-![Initial UMAP Clusters](figures/02_umap_initial_clusters.png)
-*UMAP visualization showing initial cluster assignments.*
-
-### Rare Cell Population Analysis
-![UMAP 27 Communities](figures/umap_27_communities.png)
-*UMAP showing 27 distinct cell communities identified.*
-
-![UMAP Rare Cells](figures/umap_rare_cells.png)
-*UMAP highlighting rare cell populations identified by BigSur.*
-
-### Marker & Differential Expression
-![Marker Feature Plots](figures/02_feature_plots_markers.png)
-*Feature plots showing spatial expression of key marker genes across clusters.*
-
-![DE Gene Feature Plots](figures/04_feature_plots_de_genes.png)
-*Feature plots of differentially expressed genes for rare populations.*
-
-![DE Gene Violin Plots](figures/04_violin_de_genes.png)
-*Violin plots showing expression patterns of key DE genes across clusters.*
-
-![Cell Status UMAP](figures/04_umap_cell_status.png)
-*UMAP visualization colored by cell status or experimental condition.*
+### Differential Expression
+![Volcano Plot](04_volcano_de_genes.png)
+*Volcano plot of differentially expressed genes in rare populations*
 
 ## 🐛 Troubleshooting
 
 ### Common Issues
 
 1. **No rare cells detected**:
-
 ```r
-# Adaptive analysis for small clusters
-cluster_sizes <- table(seurat_obj$seurat_clusters)
-small_clusters <- names(cluster_sizes[cluster_sizes < 10])  # Adjust threshold
+# Try adjusting parameters
+results <- BigSur(
+  seurat.obj = your_data,
+  fano.alpha = 0.1,  # Less strict FDR
+  min.fano = 1.2     # Lower Fano threshold
+)
 ```
 
 2. **Memory issues**:
-
 ```r
-options(future.globals.maxSize = 8000 * 1024^2)  # Increase to 8GB
+# Increase memory allocation
+options(future.globals.maxSize = 8000 * 1024^2)  # 8GB
 ```
 
-3. **Zero-count genes error**:
+3. **Installation problems**:
+   - Check `session_info.txt` for package versions
+   - Ensure all system dependencies are installed
 
-```r
-# Filter zero-count genes before BigSur
-count_matrix <- GetAssayData(seurat_obj, assay = "RNA", slot = "counts")
-zero_count_genes <- which(Matrix::rowSums(count_matrix) == 0)
-count_matrix <- count_matrix[-zero_count_genes, ]
-```
+### Reproducibility
+
+For exact environment replication, refer to `session_info.txt` which contains:
+- R version and platform information
+- Loaded package versions
+- System dependencies
 
 ## 🤝 Contributing
 
@@ -210,21 +194,21 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🙏 Acknowledgments
 
-- **BigSur** developers: [landerlabcode/BigSur](https://github.com/landerlabcode/BigSur)
-- **Seurat** team: For the comprehensive single-cell analysis framework
+- **BigSur developers**: [landerlabcode/BigSur](https://github.com/landerlabcode/BigSur)
+- **Seurat team**: For the comprehensive single-cell analysis framework
 - **10x Genomics**: For providing benchmark datasets
 - **Bioconductor**: For maintaining essential bioinformatics packages
 
 ## 📚 Citation
 
-If you use immune-chord in your research, please cite:
+If you use `immune-chord` in your research, please cite:
 
-```
-@software{immune-chord,
+```bibtex
+@software{immune_chord,
   title = {immune-chord: An R Pipeline for Rare Cell Population Identification},
-  author = {Your Name and Contributors},
+  author = {Perez, Constanza},
   year = {2024},
-  url = {https://github.com/yourusername/immune-chord},
+  url = {https://github.com/ceugenia/immune-chord},
   note = {Version 1.0}
 }
 ```
@@ -237,4 +221,4 @@ If you use immune-chord in your research, please cite:
 
 ---
 
-**Note**: This pipeline is under active development. Please report any issues or suggestions for improvement through the GitHub issues page.
+*Note: This pipeline is under active development. Please report any issues or suggestions for improvement through the GitHub issues page.*
