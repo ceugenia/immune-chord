@@ -57,6 +57,8 @@ source("R/03_chord_rare_population_analysis.R")
 source("R/04_chord_differential_expression_visualization.R")
 ```
 
+---
+
 ## 📁 Project Structure
 
 ```
@@ -77,6 +79,8 @@ immune-chord/
 ├── figures/                      # Output plots (move PNG files here)
 └── README.md
 ```
+
+---
 
 ## 📊 Recommended Datasets
 
